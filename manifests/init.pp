@@ -336,7 +336,7 @@ class nfs (
   if $nfs::mode == 'server' {
     include nfs::server
   }
-
+  
   ### Include custom class if $my_class is set
   if $nfs::my_class {
     include $nfs::my_class
