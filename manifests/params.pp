@@ -16,7 +16,8 @@ class nfs::params {
 
   ### Application related parameters
 
-  $mode = 'server'
+  $mode              = 'server'
+  $use_dynamic_ports = false
 
   $package = $::operatingsystem ? {
     /(?i:Debian|Ubuntu|Mint)/ => 'nfs-common',
