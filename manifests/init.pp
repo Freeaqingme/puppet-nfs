@@ -202,6 +202,11 @@
 #   This is used by monitor, firewall and puppi (optional) components
 #   Can be defined also by the (top scope) variable $nfs_protocol
 #
+# [*use_dynamic_ports*]
+#   By default, NFS <4 uses dynamic ports which makes it hard to debug stuff.
+#   By enabling this settings you force the ports to be always the same.
+#   Currently only supported on Debian-like systems.
+#   See also: https://wiki.debian.org/SecuringNFS
 #
 # See README for usage patterns.
 #
@@ -247,7 +252,8 @@ class nfs (
   $log_dir             = params_lookup( 'log_dir' ),
   $log_file            = params_lookup( 'log_file' ),
   $port                = params_lookup( 'port' ),
-  $protocol            = params_lookup( 'protocol' )
+  $protocol            = params_lookup( 'protocol' ),
+  $use_dynamic_ports   = params_lookup( 'use_dynamic_ports' )
   ) inherits nfs::params {
 
   $bool_source_dir_purge=any2bool($source_dir_purge)
@@ -260,6 +266,7 @@ class nfs (
   $bool_firewall=any2bool($firewall)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
+  $bool_use_dynamic_ports=any2bool($use_dynamic_ports)
 
   ### Definition of some variables used in the module
   $manage_package = $nfs::bool_absent ? {
@@ -342,7 +349,6 @@ class nfs (
     include $nfs::my_class
   }
 
-
   ### Provide puppi data, if enabled ( puppi => true )
   if $nfs::bool_puppi == true {
     $classvars=get_class_args()
@@ -353,7 +359,6 @@ class nfs (
       noop      => $nfs::noops,
     }
   }
-
 
   ### Debugging, if enabled ( debug => true )
   if $nfs::bool_debug == true {
