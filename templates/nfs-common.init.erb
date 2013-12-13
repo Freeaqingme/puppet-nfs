@@ -12,7 +12,7 @@ NEED_STATD=
 #   when you have a port-based firewall. To use a fixed port, set this
 #   this variable to a statd argument like: "--port 4000 --outgoing-port 4001".
 #   For more information, see rpc.statd(8) or http://wiki.debian.org/SecuringNFS
-<% if ! scope.lookupvar('::nfs::bool_use_dynamic_ports') -%>
+<% if scope.lookupvar('::nfs::bool_use_dynamic_ports') -%>
 STATDOPTS=
 <% else %>
 STATDOPTS="--port 32765 --outgoing-port 32766"
