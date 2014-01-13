@@ -26,7 +26,7 @@ class nfs::client (
 
   if any2bool($firewall) {
     firewall::rule { 'nfs-client-rpc-udp-in':
-      proto        => udp,
+      protocol     => udp,
       port         => 111,
       direction    => 'input',
       source       => $firewall_remote,
@@ -34,7 +34,7 @@ class nfs::client (
     }
 
     firewall::rule { 'nfs-client-rpc-udp-out':
-      proto         => udp,
+      protocol      => udp,
       port          => 111,
       direction     => 'output',
       destination   => $firewall_remote,
@@ -42,7 +42,7 @@ class nfs::client (
     }
 
     firewall::rule { 'nfs-client-rpc-tcp-in':
-      proto        => tcp,
+      protocol     => tcp,
       port         => 111,
       direction    => 'input',
       source       => $firewall_remote,
@@ -50,7 +50,7 @@ class nfs::client (
     }
 
     firewall::rule { 'nfs-client-rpc-tcp-out':
-      proto         => tcp,
+      protocol      => tcp,
       port          => 111,
       direction     => 'output',
       destination   => $firewall_remote,
@@ -58,7 +58,7 @@ class nfs::client (
     }
 
     firewall::rule { 'nfs-client-nfs-tcp-in':
-      proto        => tcp,
+      protocol     => tcp,
       port         => 2049,
       direction    => 'input',
       destination  => $firewall_remote,
@@ -66,7 +66,7 @@ class nfs::client (
     }
 
     firewall::rule { 'nfs-client-nfs-tcp-out':
-      proto         => tcp,
+      protocol      => tcp,
       port          => 2049,
       direction     => 'output',
       destination   => $firewall_remote,
